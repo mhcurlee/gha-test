@@ -4,8 +4,7 @@ on:
   schedule:
     - cron: "45 19 * * *"
     - cron: "50 19 * * *"
-
-
+  workflow_dispatch:
 
 jobs:
   debug:
@@ -18,13 +17,13 @@ jobs:
           date
           TZ="America/Chicago" date
 
-  two-thirty-five:
+  job-1:
     if: github.event.schedule == '45 19 * * *'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello World from 2:45 PM Central"
 
-  two-forty:
+  job-2:
     if: github.event.schedule == '50 19 * * *'
     runs-on: ubuntu-latest
     steps:
