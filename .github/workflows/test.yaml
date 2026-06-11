@@ -2,8 +2,8 @@ name: Schedule Test
 
 on:
   schedule:  
-    - cron: "47 19 * * *"
-    - cron: "53 19 * * *"
+    - cron: "49 20 * * *"
+    - cron: "53 20 * * *"
 
   workflow_dispatch:
 
@@ -19,13 +19,13 @@ jobs:
           TZ="America/Chicago" date
 
   job-1:
-    if: github.event.schedule == '47 19 * * *'
+    if: github.event.schedule == '49 20 * * *'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello World Job1"
 
   job-2:
-    if: github.event.schedule == '53 19 * * *'
+    if: github.event.schedule == '53 20 * * *'
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello World Job2"
