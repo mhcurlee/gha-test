@@ -1,0 +1,33 @@
+name: Schedule Test
+
+on:
+  schedule:
+    - cron: "10 14 * * *"
+      timezone: "America/Chicago"
+    - cron: "30 14 * * *"
+      timezone: "America/Chicago"
+  workflow_dispatch:
+
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show trigger info
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "schedule=${{ github.event.schedule }}"
+          date
+          TZ="America/Chicago" date
+
+  one-pm:
+    if: github.event.schedule == '10 14 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World from 2:00 PM Central"
+
+  one-thirty:
+    if: github.event.schedule == '30 14 * * *'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello World from 2:30 PM Central"
