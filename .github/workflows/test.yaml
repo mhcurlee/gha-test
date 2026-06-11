@@ -1,13 +1,10 @@
 name: Schedule Test
 
 on:
-  schedule:
-    # 3:39 PM America/Chicago (CDT and CST)
-    - cron: "39 20 * * *"
-    - cron: "39 21 * * *"
-    # 3:47 PM America/Chicago (CDT and CST)
-    - cron: "47 20 * * *"
-    - cron: "47 21 * * *"
+  schedule:  
+    - cron: "47 19 * * *"
+    - cron: "53 19 * * *"
+
   workflow_dispatch:
 
 jobs:
@@ -22,13 +19,13 @@ jobs:
           TZ="America/Chicago" date
 
   job-1:
-    if: github.event.schedule == '39 20 * * *' || github.event.schedule == '39 21 * * *'
+    if: github.event.schedule == '47 19 * * *'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello World from 3:39 PM Central"
+      - run: echo "Hello World Job1"
 
   job-2:
-    if: github.event.schedule == '47 20 * * *' || github.event.schedule == '47 21 * * *'
+    if: github.event.schedule == '53 19 * * *'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello World from 3:47 PM Central"
+      - run: echo "Hello World Job2"
