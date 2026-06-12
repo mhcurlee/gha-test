@@ -1,31 +1,60 @@
-name: Schedule Test
+name: Test Workflow Schedule Debug
 
 on:
-  schedule:  
-    - cron: "5 22 * * *"
-    - cron: "10 22 * * *"
-
   workflow_dispatch:
+    inputs:
+      skip_terraform:
+        description: Skip the Terraform workflow for this manual run?
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+  schedule:
+    - cron: "15 5 * * 1-5"
+    - cron: "0 13 * * 1-5"
+    - cron: "0 16 * * 1-5"
+    - cron: "0 19 * * 1-5"
+    - cron: "0 21 * * 1-5"
+
 
 jobs:
-  debug:
+  always-debug:
+    name: Always Debug
     runs-on: ubuntu-latest
-    steps:
-      - name: Show trigger info
-        run: |
-          echo "event_name=${{ github.event_name }}"
-          echo "schedule=${{ github.event.schedule }}"
-          date
-          TZ="America/Chicago" date
 
-  job-1:
-    if: github.event.schedule == '5 22 * * *'
-    runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello World Job1"
+      - name: Echo Date
+        run: date
 
-  job-2:
-    if: github.event.schedule == '10 22 * * *'
+      - name: Echo Event Name
+        run: echo "github.event_name=${{ github.event_name }}"
+
+      - name: Echo Event Schedule
+        run: echo "github.event.schedule=${{ github.event.schedule || 'N/A' }}"
+
+
+  conditional-debug:
+    name: Conditional Debug
     runs-on: ubuntu-latest
+
+    if: >
+      (github.event_name == 'workflow_dispatch' && inputs.skip_terraform != 'true') ||
+      github.event_name == 'push' ||
+      (github.event_name == 'schedule' &&
+       github.event.schedule != '0 13 * * 1-5' &&
+       github.event.schedule != '0 16 * * 1-5' &&
+       github.event.schedule != '0 19 * * 1-5' &&
+       github.event.schedule != '0 21 * * 1-5')
+
     steps:
-      - run: echo "Hello World Job2"
+      - name: Echo Date
+        run: date
+
+      - name: Echo Event Name
+        run: echo "github.event_name=${{ github.event_name }}"
+
+      - name: Echo Event Schedule
+        run: echo "github.event.schedule=${{ github.event.schedule || 'N/A' }}"
