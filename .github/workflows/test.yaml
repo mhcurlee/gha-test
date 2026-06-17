@@ -14,10 +14,10 @@ on:
 
   schedule:
     - cron: "15 5 * * 1-5"
-    - cron: "0 11 * * 1-5"
-    - cron: "0 13 * * 1-5"
-    - cron: "0 15 * * 1-5"
-    - cron: "0 17 * * 1-5"
+    - cron: "0 12 * * 1-5"
+    - cron: "0 14 * * 1-5"
+    - cron: "0 16 * * 1-5"
+    - cron: "0 18 * * 1-5"
 
 
 jobs:
@@ -44,10 +44,10 @@ jobs:
       (github.event_name == 'workflow_dispatch' && inputs.skip_terraform != 'true') ||
       github.event_name == 'push' ||
       (github.event_name == 'schedule' &&
-       github.event.schedule != '0 11 * * 1-5' &&
-       github.event.schedule != '0 13 * * 1-5' &&
-       github.event.schedule != '0 15 * * 1-5' &&
-       github.event.schedule != '0 17 * * 1-5')
+       github.event.schedule != '0 12 * * 1-5' &&
+       github.event.schedule != '0 14 * * 1-5' &&
+       github.event.schedule != '0 16 * * 1-5' &&
+       github.event.schedule != '0 18 * * 1-5')
 
     steps:
       - name: Echo Date
