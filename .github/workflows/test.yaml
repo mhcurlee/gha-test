@@ -12,12 +12,12 @@ on:
           - 'false'
           - 'true'
 
-  schedule:
-    - cron: "15 5 * * 1-5"
-    - cron: "0 12 * * 1-5"
-    - cron: "0 14 * * 1-5"
-    - cron: "0 16 * * 1-5"
-    - cron: "0 18 * * 1-5"
+  # schedule:
+  #   - cron: "15 5 * * 1-5"
+  #   - cron: "0 12 * * 1-5"
+  #   - cron: "0 14 * * 1-5"
+  #   - cron: "0 16 * * 1-5"
+  #   - cron: "0 18 * * 1-5"
 
 
 jobs:
